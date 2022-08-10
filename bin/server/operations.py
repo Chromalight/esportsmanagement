@@ -37,8 +37,8 @@ else:
         user = basedata.find_one(data)
         if bool(user):
             # Session system will be implemented when required.
-            return
+            return 1
 
         else:
-            return 'The user credentials used are not valid.'
+            return 0
 

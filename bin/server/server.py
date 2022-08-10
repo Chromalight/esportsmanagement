@@ -1,9 +1,7 @@
 import requests
 import operations
-import json
-from flask import Flask
+from flask import Flask, request
 import os
-from flask import request 
 
 # After CLI/HTTP request based functions are all-working, the website will become the development focus.
 
@@ -15,15 +13,20 @@ def home():
     
 @app.route('/login', methods=['POST'])
 def login():
-    email = request.args.get('email')
-    password = request.args.get('password')
-    operations.loginUser(email, password)
-    # Session system will be implemented in the future.
+    credentials = request.get_json()
+    email = credentials['email']
+    password = credentials['password']
 
+    if operations.loginUser(email, password):
+        return 'Logged in.'
+        # Session system will be implemented in the future.
+
+    else:
+        return 'Login failed.'
 @app.route('/logout')
 def logout():
     return # Reserved for post-session system development.
-
+    
 
 @app.route('/manageteam')
 def manageteam():
